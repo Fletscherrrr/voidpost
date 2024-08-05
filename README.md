@@ -1,2 +1,4 @@
-# voidchroot
-chroot void install script. I have no idea whether this will be successful or not but I'd be happy if it's gonna be.
+# voidpost
+
+script for post install convenience
+i work on this from time to time and hope to expand it by a fair bit in the future
