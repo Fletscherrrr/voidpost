@@ -23,7 +23,7 @@ xbps-install -Syu || failureCheck
 
 # Installing necessary packages
 echo "Installing essential packages..."
-xbps-install -Sy dialog pipewire wireplumber flatpak alsa-pipewire dosfstools base-devel wget ncurses libgcc xdg-desktop-portal xdg-utils xdg-user-dirs \
+xbps-install -Sy dialog pipewire wireplumber flatpak dosfstools base-devel wget ncurses libgcc xdg-desktop-portal xdg-utils xdg-user-dirs \
     bash dbus elogind bash-completion file tldr less man-pages mdocml pciutils usbutils dhcpcd chrony \
     kbd iproute2 iputils ethtool kmod acpid eudev lvm2 networkmanager libgcc-32bit libstdc++-32bit libdrm-32bit libglvnd-32bit mono vulkan-loader vulkan-loader-32bit wine winetricks google-fonts-ttf freefont-ttf || failureCheck
 
@@ -36,34 +36,16 @@ echo "Configuring PipeWire system-wide..."
 mkdir -p /etc/pipewire/pipewire.conf.d
 ln -s /usr/share/examples/wireplumber/10-wireplumber.conf /etc/pipewire/pipewire.conf.d/
 ln -s /usr/share/examples/pipewire/20-pipewire-pulse.conf /etc/pipewire/pipewire.conf.d/
-ln -s /usr/share/alsa/alsa.conf.d/50-pipewire.conf /etc/alsa/conf.d
-ln -s /usr/share/alsa/alsa.conf.d/99-pipewire-default.conf /etc/alsa/conf.d
 ln -s /usr/share/applications/pipewire.desktop /etc/xdg/autostart/
 
 # CPU Microcode Selection
-cpuChoice=$(drawDialog --title "CPU Microcode" --menu "Select your CPU type for microcode installation." 0 0 0 \
-    "intel" "Intel CPU Microcode" \
-    "amd" "AMD CPU Microcode" \
-    "skip" "Skip" "")
+cpuChoice=$(drawDialog --no-cancel --title "Desktop Environment" --extra-button --extra-label "Map" --menu "" 0 0 0 "intel" "" "amd" "" "skip" "")
 
 # GPU Driver Selection
-graphicsChoice=$(drawDialog --title "GPU Drivers" --menu "Choose a GPU driver option." 0 0 0 \
-    "intel" "Intel Mesa Drivers" \
-    "amd" "AMD Mesa Drivers" \
-    "nvidia" "NVIDIA Drivers" \
-    "nvidia-optimus" "NVIDIA Optimus (Intel + NVIDIA)" \
-    "skip" "Skip" "")
+graphicsChoice=$(drawDialog --no-cancel --title "Desktop Environment" --extra-button --extra-label "Map" --menu "" 0 0 0 "intel" "" "amd" "" "nvidia" "" "nvidia-optimus" "" "skip" "")
 
 # Desktop Environment Selection
-desktopChoice=$(drawDialog --title "Desktop Environment" --menu "Choose a Desktop Environment or Window Manager." 0 0 0 \
-    "kde" "KDE Plasma" \
-    "gnome" "GNOME" \
-    "budgie" "Budgie" \
-    "cinnamon" "Cinnamon" \
-    "awesomewm" "AwesomeWM" \
-    "i3" "i3 Gaps" \
-    "qtile" "Qtile" \
-    "skip" "Skip" "")
+desktopChoice=$(drawDialog --no-cancel --title "Desktop Environment" --extra-button --extra-label "Map" --menu "" 0 0 0 "kde" "" "gnome" "" "budgie" "" "cinnamon" "" "awesomewm" "" "i3" "" "qtile" "" "skip" "")
 
 # Install Selected CPU Microcode
 case $cpuChoice in
